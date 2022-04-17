@@ -1,14 +1,14 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import FormDialog from './form-dialog';
-import VerticalTabs from "./vertical-tabs";
+import StageTabs from "./stage-tabs";
 import styled from '@emotion/styled';
 import { Grid } from '@mui/material';
 import initialData from './initial-data';
 
 const DialogContainer = styled.div`
     margin-top: 30px;
-    margin-left: 70px;
+    margin-left: 35px;
 `;
 
 class App extends React.Component {
@@ -18,17 +18,29 @@ class App extends React.Component {
   }
 
   onAddStage = (value) => {
-    const newStages = this.state.stages.slice();
+    const newStages = (this.state.stages || []).slice();
     newStages.push({name: value});
     this.setState({stages: newStages});
+  }
+
+  onAddStep = (stageIndex, newStepName) => {
+    const stage = this.state.stages[stageIndex];
+    stage.steps = stage.steps || [];
+    stage.steps.push({name: newStepName});
+
+    this.setState({stages: this.state.stages});
   }
 
   render() {
     return (
       <Grid>
-        <VerticalTabs stages={this.state.stages} />
+        <StageTabs stages={this.state.stages} onAddStep={this.onAddStep} />
         <DialogContainer>
-          <FormDialog onAddStage={this.onAddStage} />
+          <FormDialog
+            onAddProperty={this.onAddStage}
+            buttonText={'Добавить стадию'}
+            dialogTitle={'Новая стадия'}
+          />
         </DialogContainer>
       </Grid>
     );

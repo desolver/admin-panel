@@ -4,8 +4,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import { Add, Edit } from '@mui/icons-material';
+import styled from '@emotion/styled';
+import StepTabs from './step-tabs';
+import FormDialog from './form-dialog';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,19 +41,30 @@ function a11yProps(index) {
   };
 }
 
-export default class VerticalTabs extends React.Component {
+const DialogContainer = styled.div`
+    margin-top: 30px;
+    margin-left: 35px;
+`;
+
+export default class StageTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      activeStageIndex: 0
     };
   }
 
   handleChange = (event, newValue) => {
-    this.setState({value: newValue});
+    this.setState({activeStageIndex: newValue});
+  };
+
+  onAddStep = (newStepName) => {
+    this.props.onAddStep(this.state.activeStageIndex, newStepName);
   };
 
   render() {
+    const stages = this.props.stages || [];
+
     return (
       <Box
         sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
@@ -60,27 +72,34 @@ export default class VerticalTabs extends React.Component {
         <Tabs
           orientation="vertical"
           variant="scrollable"
-          value={this.state.value}
+          value={this.state.activeStageIndex}
           onChange={this.handleChange}
           aria-label="Vertical tabs"
-          sx={{ borderRight: 1, borderColor: 'divider' }}
+          sx={{ borderRight: 1, borderColor: 'divider', minWidth: 250 }}
         >
           {
-            this.props.stages.map((stage, index) => (
+            stages.map((stage, index) => (
               <Tab
                 key={index}
                 label={stage.name}
                 {...a11yProps(index)}
                 wrapped
-                sx={{ fontSize: 16 }}>
+                sx={{ fontSize: 16, textTransform: 'none', fontWeight: "bold"}}>
               </Tab>
             ))
           }
         </Tabs>
         {
-          this.props.stages.map((stage, index) => (
-            <TabPanel value={this.state.value} index={index} key={index}>
-              Контеееент  + {index}
+          stages.map((stage, index) => (
+            <TabPanel value={this.state.activeStageIndex} index={index} key={index}>
+              <StepTabs steps={stage.steps}></StepTabs>
+              <DialogContainer>
+                <FormDialog
+                  onAddProperty={this.onAddStep}
+                  buttonText={'Добавить шаг'}
+                  dialogTitle={'Новый шаг'}
+                />
+              </DialogContainer>
             </TabPanel>
           ))
         }
