@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import styled from '@emotion/styled';
 import StepTabs from './step-tabs';
-import FormDialog from './form-dialog';
+import AddPropertyDialog from './add-property-dialog';
+import { Button, Grid } from '@mui/material';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -20,9 +20,9 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Grid sx={{ p: 3 }}>
           <Typography>{children}</Typography>
-        </Box>
+        </Grid>
       )}
     </div>
   );
@@ -62,13 +62,18 @@ export default class StageTabs extends React.Component {
     this.props.onAddStep(this.state.activeStageIndex, newStepName);
   };
 
+  onAddParameter = (stepIndex, name, description, fieldType, defaultValue) => {
+    this.props.onAddParameter(this.state.activeStageIndex, stepIndex, name, description, fieldType, defaultValue);
+  };
+
   render() {
     const stages = this.props.stages || [];
 
     return (
-      <Box
+      <Grid
         sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
       >
+        Стадии
         <Tabs
           orientation="vertical"
           variant="scrollable"
@@ -92,9 +97,9 @@ export default class StageTabs extends React.Component {
         {
           stages.map((stage, index) => (
             <TabPanel value={this.state.activeStageIndex} index={index} key={index}>
-              <StepTabs steps={stage.steps}></StepTabs>
+              <StepTabs steps={stage.steps} onAddParameter={this.onAddParameter} />
               <DialogContainer>
-                <FormDialog
+                <AddPropertyDialog
                   onAddProperty={this.onAddStep}
                   buttonText={'Добавить шаг'}
                   dialogTitle={'Новый шаг'}
@@ -103,7 +108,7 @@ export default class StageTabs extends React.Component {
             </TabPanel>
           ))
         }
-      </Box>
+      </Grid>
     );
   }
 }

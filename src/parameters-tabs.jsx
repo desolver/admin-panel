@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import ParameterTabs from './parameters-tabs';
-import styled from '@emotion/styled';
-import AddParameterDialog from './add-parameter-dialog';
 import { Grid } from '@mui/material';
 
 function TabPanel(props) {
@@ -41,29 +38,20 @@ function a11yProps(index) {
   };
 }
 
-const DialogContainer = styled.div`
-    margin-top: 30px;
-    margin-left: 35px;
-`;
-
-export default class StepTabs extends React.Component {
+export default class ParameterTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStepIndex: 0
+      value: 0
     };
   }
 
   handleChange = (event, newValue) => {
-    this.setState({activeStepIndex: newValue});
-  };
-
-  onAddParameter = (name, description, fieldType, defaultValue) => {
-    this.props.onAddParameter(this.state.activeStepIndex, name, description, fieldType, defaultValue)
+    this.setState({value: newValue});
   };
 
   render() {
-    const steps = this.props.steps || [];
+    const parameters = this.props.parameters || [];
 
     return (
       <Grid
@@ -72,16 +60,16 @@ export default class StepTabs extends React.Component {
         <Tabs
           orientation="vertical"
           variant="scrollable"
-          value={this.state.activeStepIndex}
+          value={this.state.value}
           onChange={this.handleChange}
           aria-label="Vertical tabs"
-          sx={{ borderRight: 1, borderColor: 'divider', minWidth: 250 }}
+          sx={{ borderRight: 1, borderColor: 'divider', minWidth: 300 }}
         >
           {
-            steps.map((step, index) => (
+            parameters.map((parameter, index) => (
               <Tab
                 key={index}
-                label={step.name}
+                label={parameter.name}
                 {...a11yProps(index)}
                 wrapped
                 sx={{ fontSize: 16, textTransform: 'none', fontWeight: "bold"}}>
@@ -90,12 +78,11 @@ export default class StepTabs extends React.Component {
           }
         </Tabs>
         {
-          steps.map((step, index) => (
-            <TabPanel value={this.state.activeStepIndex} index={index} key={index}>
-              <ParameterTabs parameters={step.parameters}></ParameterTabs>
-              <DialogContainer>
-                <AddParameterDialog onAddParameter={this.onAddParameter} />
-              </DialogContainer>
+          parameters.map((parameter, index) => (
+            <TabPanel value={this.state.value} index={index} key={index}>
+              <b>Описание:</b> {parameter.description}<br/>
+              <b>Тип вывода:</b> {parameter.type}<br/>
+              <b>Значение по умолчанию:</b> {parameter.defaultValue}<br/>
             </TabPanel>
           ))
         }

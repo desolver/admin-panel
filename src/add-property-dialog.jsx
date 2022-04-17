@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Button, Fab } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
-export default class FormDialog extends React.Component {
+export default class AddPropertyDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
