@@ -49,7 +49,7 @@ export default class AddParameterDialog extends React.Component {
           onClick={() => this.openDialog()}
         >
           <Add sx={{ mr: 1 }} />
-          Добавить параметр
+          Добавить
         </Fab>
 
         <Dialog open={this.state.dialogOpen} onClose={() => this.closeDialog()}>
