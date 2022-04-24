@@ -44,11 +44,16 @@ export default class CustomTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTabIndex: 0,
+      activeTabIndex: undefined,
     };
   }
 
   handleChange = (event, newValue) => {
+    if (newValue == this.state.activeTabIndex) {
+      this.setState({ activeTabIndex: undefined });
+      return;
+    }
+
     this.setState({ activeTabIndex: newValue });
     this.props.onChangeTab(newValue);
   };
