@@ -79,7 +79,7 @@ export default class CustomTabs extends React.Component {
                 width: '100%'
               }}
               onClick={() => this.handleChange(null, index)}
-            ></Tab>
+            />
             <IconButton aria-label="add" size="small" sx={{ ml: -1, mt: -1 }}>
               <Edit sx={{ fontSize: 16 }} />
             </IconButton>

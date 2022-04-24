@@ -39,7 +39,8 @@ export default class VisualizationTabs extends React.Component {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            mt: 5
+            mt: 5,
+            width: this.props.width
           }}
         >
           <Grid

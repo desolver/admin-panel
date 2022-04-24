@@ -1,8 +1,9 @@
 import * as React from 'react';
-import ParameterTabs from './parameters-tabs';
-import AddPropertyDialog from './add-property-dialog';
-import CustomTabs from './tabs';
-import VisualizationTabs from './visualization-tab';
+import ParameterTabs from '../parameters/parameters-tabs';
+import AddPropertyDialog from '../add-property-dialog';
+import CustomTabs from '../tabs';
+import VisualizationTabs from '../visualizations/visualization-tab';
+import ProductFilterTabs from '../product-filter-tabs';
 
 export default class StepTabs extends React.Component {
   constructor(props) {
@@ -17,13 +18,21 @@ export default class StepTabs extends React.Component {
     this.setState({ activeStepIndex: newTabIndex });
   };
 
-  onAddParameter = (name, description, fieldType, defaultValue) => {
-    this.props.onAddParameter(this.state.activeStepIndex, name, description, fieldType, defaultValue);
+  onSaveParameter = (parameter) => {
+    this.props.onAddParameter(this.state.activeStepIndex, parameter);
   };
 
   onSaveVisualization = (cameraPositionId) => {
     this.props.onSaveVisualization(this.state.activeStepIndex, cameraPositionId);
-  }
+  };
+
+  onSaveFilter = () => {
+
+  };
+
+  onSaveValidator = (parameterIndex, validator) => {
+    this.props.onSaveValidator(this.state.activeStepIndex, parameterIndex, validator);
+  };
 
   render() {
     return (
@@ -46,13 +55,17 @@ export default class StepTabs extends React.Component {
           <div>
             <ParameterTabs
               parameters={step.parameters}
-              onAddParameter={this.onAddParameter}
+              onAddParameter={this.onSaveParameter}
+              onSaveValidator={this.onSaveValidator}
+            />
+            <ProductFilterTabs
+              filters={step.filters}
+              onAddFilter={this.onSaveFilter}
             />
             <VisualizationTabs
-              mt={5}
               visualization={step.visualizationSetup}
-              onChangeVisualization={this.onChangeVisualization}
               onSave={this.onSaveVisualization}
+              width={250}
             />
           </div>
         )}

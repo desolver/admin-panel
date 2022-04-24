@@ -1,7 +1,7 @@
 import * as React from "react";
-import StepTabs from "./step-tabs";
-import AddPropertyDialog from "./add-property-dialog";
-import CustomTabs from "./tabs";
+import StepTabs from "../steps/step-tabs";
+import AddPropertyDialog from "../add-property-dialog";
+import CustomTabs from "../tabs";
 
 export default class StageTabs extends React.Component {
   constructor(props) {
@@ -20,19 +20,16 @@ export default class StageTabs extends React.Component {
     this.props.onAddStep(this.state.activeStageIndex, newStepName);
   };
 
-  onAddParameter = (stepIndex, name, description, fieldType, defaultValue) => {
-    this.props.onAddParameter(
-      this.state.activeStageIndex,
-      stepIndex,
-      name,
-      description,
-      fieldType,
-      defaultValue
-    );
+  onAddParameter = (stepIndex, parameter) => {
+    this.props.onAddParameter(this.state.activeStageIndex, stepIndex, parameter);
   };
 
   onSaveVisualization = (stepIndex, cameraPositionId) => {
     this.props.onSaveVisualization(this.state.activeStageIndex, stepIndex, cameraPositionId);
+  }
+
+  onSaveValidator = (stepIndex, parameterIndex, validator) => {
+    this.props.onSaveValidator(this.state.activeStageIndex, stepIndex, parameterIndex, validator);
   }
 
   render() {
@@ -57,6 +54,7 @@ export default class StageTabs extends React.Component {
             onAddStep={this.onAddStep}
             onAddParameter={this.onAddParameter}
             onSaveVisualization={this.onSaveVisualization}
+            onSaveValidator={this.onSaveValidator}
           />
         )}
         onChangeTab={this.onChangeTab}

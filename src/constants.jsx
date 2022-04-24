@@ -1,0 +1,1 @@
+export const DEFAULT_PARAMETER_TYPE = 'Int';

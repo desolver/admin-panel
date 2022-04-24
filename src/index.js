@@ -1,6 +1,6 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
-import StageTabs from "./stage-tabs";
+import StageTabs from "./stages/stage-tabs";
 import { Grid } from "@mui/material";
 import initialData from "./initial-data";
 
@@ -24,21 +24,15 @@ class App extends React.Component {
     this.updateStageState();
   };
 
-  onAddParameter = (
-    stageIndex,
-    stepIndex,
-    name,
-    description,
-    fieldType,
-    defaultValue
-  ) => {
+  onAddParameter = (stageIndex, stepIndex, parameter) => {
     const step = this.state.stages[stageIndex].steps[stepIndex];
     step.parameters = step.parameters || [];
     step.parameters.push({
-      name: name,
-      description: description,
-      type: fieldType,
-      defaultValue: defaultValue,
+      id: parameter.id,
+      name: parameter.name,
+      description: parameter.description,
+      type: parameter.fieldType,
+      defaultValue: parameter.defaultValue,
     });
 
     this.updateStageState();
@@ -54,6 +48,22 @@ class App extends React.Component {
     this.updateStageState();
   }
 
+  onSaveValidator = (stageIndex, stepIndex, parameterIndex, validator) => {
+    const parameter = this.state.stages[stageIndex].steps[stepIndex].parameters[parameterIndex];
+    parameter.validators = parameter.validators || [];
+
+    parameter.validators.push({
+      id: validator.id,
+      validationType: validator.validationType,
+      primaryValue: validator.primaryValue,
+      additionalValue: validator.additionalValue,
+      onErrorMessage: validator.onErrorMessage
+    });
+
+    this.updateStageState();
+    console.log(this.state.stages)
+  }
+
   render() {
     return (
       <Grid>
@@ -63,6 +73,7 @@ class App extends React.Component {
           onAddStep={this.onAddStep}
           onAddParameter={this.onAddParameter}
           onSaveVisualization={this.onSaveVisualization}
+          onSaveValidator={this.onSaveValidator}
         />
       </Grid>
     );

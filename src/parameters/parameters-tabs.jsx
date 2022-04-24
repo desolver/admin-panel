@@ -1,6 +1,7 @@
 import * as React from 'react';
 import AddParameterDialog from './add-parameter-dialog';
-import CustomTabs from './tabs';
+import ParameterValidatorTabs from '../validators/parameter-validator-tabs';
+import CustomTabs from '../tabs';
 
 export default class ParameterTabs extends React.Component {
   constructor(props) {
@@ -13,6 +14,10 @@ export default class ParameterTabs extends React.Component {
 
   onChangeTab = (newTabIndex) => {
     this.setState({activeParameterIndex: newTabIndex});
+  };
+
+  onSaveValidator = (validator) => {
+    this.props.onSaveValidator(this.state.activeParameterIndex, validator);
   };
 
   render() {
@@ -33,9 +38,15 @@ export default class ParameterTabs extends React.Component {
         innerTabs={(parameter) => {
           return (
             <div>
+              <b>ID:</b> {parameter.id}<br />
               <b>Описание:</b> {parameter.description}<br />
               <b>Тип вывода:</b> {parameter.type}<br />
               <b>Значение по умолчанию:</b> {parameter.defaultValue}<br />
+              <ParameterValidatorTabs
+                validators={parameter.validators}
+                onSaveValidator={this.onSaveValidator}
+                parameter={parameter}
+              />
             </div>
           )
         }}

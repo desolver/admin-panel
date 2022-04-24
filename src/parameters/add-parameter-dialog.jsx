@@ -4,13 +4,16 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Button, Fab, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button } from '@mui/material';
+import { FieldType } from '../value-representations/field-type';
+import { DEFAULT_PARAMETER_TYPE } from '../constants';
+import { createGuid } from '../guid-creator';
 
 export default class AddParameterDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedType: 'String'
+      selectedType: DEFAULT_PARAMETER_TYPE
     }
   }
 
@@ -19,8 +22,9 @@ export default class AddParameterDialog extends React.Component {
     const description = document.getElementById("new-parameter-description").value;
     const fieldType = this.state.selectedType;
     const defaultValue = document.getElementById("new-parameter-default-value").value;
+    const id = createGuid();
 
-    this.props.onAddParameter(name, description, fieldType, defaultValue);
+    this.props.onAddParameter({id, name, description, fieldType, defaultValue});
     this.props.onClose();
   };
 
@@ -51,19 +55,10 @@ export default class AddParameterDialog extends React.Component {
             variant="standard"
             required
           />
-          <InputLabel id="demo-simple-select-label" sx={{ mt: 2 }}>Тип параметра</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="parameter-type-select"
-            value={this.state.selectedType}
+          <FieldType
+            selectedType={this.state.selectedType}
             onChange={this.changeSelectTypeValue}
-          >
-            <MenuItem value={'String'}>Строка</MenuItem>
-            <MenuItem value={'Bool'}>Флаг</MenuItem>
-            <MenuItem value={'Int'}>Целое число</MenuItem>
-            <MenuItem value={'Float'}>Дробное число</MenuItem>
-            <MenuItem value={'Enumeration'}>Выбор из нескольких значений</MenuItem>
-          </Select>
+          />
           <TextField
             margin="dense"
             id="new-parameter-default-value"
