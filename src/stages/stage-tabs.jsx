@@ -32,6 +32,10 @@ export default class StageTabs extends React.Component {
     this.props.onSaveValidator(this.state.activeStageIndex, stepIndex, parameterIndex, validator);
   }
 
+  onSaveFilter = (stepIndex, filter) => {
+    this.props.onSaveFilter(this.state.activeStageIndex, stepIndex, filter);
+  }
+
   render() {
     return (
       <CustomTabs
@@ -55,6 +59,7 @@ export default class StageTabs extends React.Component {
             onAddParameter={this.onAddParameter}
             onSaveVisualization={this.onSaveVisualization}
             onSaveValidator={this.onSaveValidator}
+            onSaveFilter={this.onSaveFilter}
           />
         )}
         onChangeTab={this.onChangeTab}

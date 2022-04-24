@@ -3,7 +3,7 @@ import ParameterTabs from '../parameters/parameters-tabs';
 import AddPropertyDialog from '../add-property-dialog';
 import CustomTabs from '../tabs';
 import VisualizationTabs from '../visualizations/visualization-tab';
-import ProductFilterTabs from '../product-filter-tabs';
+import ProductFilterTabs from '../filters/product-filter-tabs';
 
 export default class StepTabs extends React.Component {
   constructor(props) {
@@ -34,6 +34,10 @@ export default class StepTabs extends React.Component {
     this.props.onSaveValidator(this.state.activeStepIndex, parameterIndex, validator);
   };
 
+  onSaveFilter = (filter) => {
+    this.props.onSaveFilter(this.state.activeStepIndex, filter);
+  };
+
   render() {
     return (
       <CustomTabs
@@ -60,7 +64,7 @@ export default class StepTabs extends React.Component {
             />
             <ProductFilterTabs
               filters={step.filters}
-              onAddFilter={this.onSaveFilter}
+              onSaveFilter={this.onSaveFilter}
             />
             <VisualizationTabs
               visualization={step.visualizationSetup}

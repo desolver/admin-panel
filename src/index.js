@@ -61,8 +61,22 @@ class App extends React.Component {
     });
 
     this.updateStageState();
-    console.log(this.state.stages)
   }
+
+  onSaveFilter = (stageIndex, stepIndex, filter) => {
+    const step = this.state.stages[stageIndex].steps[stepIndex];
+    step.filters = step.filters || [];
+    step.filters.push({
+      id: filter.id,
+      mode: filter.mode,
+      propertyName: filter.propertyName,
+      valueType: filter.valueType,
+      primaryValue: filter.primaryValue,
+      additionalValue: filter.additionalValue
+    });
+
+    this.updateStageState();
+  };
 
   render() {
     return (
@@ -74,6 +88,7 @@ class App extends React.Component {
           onAddParameter={this.onAddParameter}
           onSaveVisualization={this.onSaveVisualization}
           onSaveValidator={this.onSaveValidator}
+          onSaveFilter={this.onSaveFilter}
         />
       </Grid>
     );

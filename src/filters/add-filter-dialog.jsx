@@ -8,19 +8,21 @@ import { Button, FormLabel, InputLabel, MenuItem, Select } from '@mui/material';
 import ValueRepresentation from '../value-representations/value-representation-fields';
 import { DEFAULT_PARAMETER_TYPE } from '../constants';
 import { createGuid } from '../guid-creator';
+import { FieldType } from '../value-representations/field-type';
 
-export default class AddValidatorDialog extends React.Component {
+export default class AddFilterDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             compareType: 'Equals',
-            parameter: this.props.parameter
+            parameter: this.props.parameter,
+            fieldType: DEFAULT_PARAMETER_TYPE
         }
     }
 
     changeSelectTypeValue = (event) => {
         this.setState({ compareType: event.target.value });
-    }
+    };
 
     changeMainParameterUsage = (parameter) => {
         this.setState({
@@ -28,7 +30,7 @@ export default class AddValidatorDialog extends React.Component {
             mainParameterConstant: parameter.constant,
             mainDynamicParameterEnabled: parameter.dynamicParameterEnabled
         });
-    }
+    };
 
     changeAdditionalParameterUsage = (parameter) => {
         this.setState({
@@ -38,7 +40,12 @@ export default class AddValidatorDialog extends React.Component {
         });
     };
 
-    onValidatorSave = () => {
+    onFieldTypeChange = (event) => {
+        const fieldType = event.target.value;
+        this.setState({ fieldType: fieldType });
+    };
+
+    onFilterSave = () => {
         const usePrimaryDynamicParameter = this.state.mainDynamicParameterEnabled || false;
         const primaryValueType = usePrimaryDynamicParameter
             ? undefined
@@ -51,20 +58,21 @@ export default class AddValidatorDialog extends React.Component {
 
         this.props.onSave({
             id: createGuid(),
-            validationType: this.state.compareType,
+            mode: this.state.compareType,
+            propertyName: document.getElementById("filter-property-name").value,
+            valueType: this.state.fieldType,
             primaryValue: {
                 type: primaryValueType,
                 useDynamicParameter: usePrimaryDynamicParameter,
-                dynamicParameterId: usePrimaryDynamicParameter ? this.state.parameter.id : undefined,
+                dynamicParameterId: usePrimaryDynamicParameter ? this.state.parameter : undefined,
                 constantValue: usePrimaryDynamicParameter ? undefined : this.state.mainParameterConstant
             },
             additionalValue: {
                 type: additionalValueType,
                 useDynamicParameter: useAdditionalDynamicParameter,
-                dynamicParameterId: useAdditionalDynamicParameter ? this.state.parameter.id : undefined,
+                dynamicParameterId: useAdditionalDynamicParameter ? this.state.parameter : undefined,
                 constantValue: useAdditionalDynamicParameter ? undefined : this.state.additionalParameterConstant
-            },
-            onErrorMessage: document.getElementById("validator-error-message").value
+            }
         });
         this.props.onClose();
     };
@@ -72,8 +80,16 @@ export default class AddValidatorDialog extends React.Component {
     render() {
         return (
             <Dialog open={this.props.open} onClose={this.props.onClose}>
-                <DialogTitle>Новый валидатор</DialogTitle>
+                <DialogTitle>Новый фильтр</DialogTitle>
                 <DialogContent sx={{ width: 450 }}>
+                    <TextField
+                        margin="dense"
+                        id="filter-property-name"
+                        label="Название свойства"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                    />
                     <InputLabel id="demo-simple-select-label" sx={{ mt: 2 }}>Тип сравнения</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -88,13 +104,9 @@ export default class AddValidatorDialog extends React.Component {
                         <MenuItem value={'LessThanOrEqualTo'}>Меньше или равно</MenuItem>
                         <MenuItem value={'InRange'}>В диапазоне</MenuItem>
                     </Select>
-                    <TextField
-                        margin="dense"
-                        id="validator-error-message"
-                        label="Сообщение пользователю при ошибке"
-                        type="text"
-                        fullWidth
-                        variant="standard"
+                    <FieldType
+                        onChange={this.onFieldTypeChange}
+                        selectedType={this.state.fieldType}
                     />
                     <FormLabel component="legend" sx={{ mt: 5, fontWeight: "bold", fontSize: 20 }}>Основное значение</FormLabel>
                     <ValueRepresentation
@@ -108,7 +120,7 @@ export default class AddValidatorDialog extends React.Component {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" onClick={this.onValidatorSave}>Сохранить</Button>
+                    <Button variant="contained" onClick={this.onFilterSave}>Сохранить</Button>
                 </DialogActions>
             </Dialog>
         );

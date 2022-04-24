@@ -3,7 +3,7 @@ import { InputLabel, MenuItem, Select } from "@mui/material";
 export function FieldType(props) {
     return (
         <div>
-            <InputLabel id="demo-simple-select-label" sx={{ mt: 2 }}>Тип</InputLabel>
+            <InputLabel id="demo-simple-select-label" sx={{ mt: 2 }}>Тип значения</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="value-type-select"
