@@ -46,6 +46,14 @@ class App extends React.Component {
 
   updateStageState = () => this.setState({ stages: this.state.stages });
 
+  onSaveVisualization = (stageIndex, stepIndex, cameraPositionId) => {
+    const step = this.state.stages[stageIndex].steps[stepIndex];
+    step.visualizationSetup = step.visualizationSetup || {};
+    step.visualizationSetup.cameraPositionId = cameraPositionId;
+
+    this.updateStageState();
+  }
+
   render() {
     return (
       <Grid>
@@ -54,6 +62,7 @@ class App extends React.Component {
           onAddStage={this.onAddStage}
           onAddStep={this.onAddStep}
           onAddParameter={this.onAddParameter}
+          onSaveVisualization={this.onSaveVisualization}
         />
       </Grid>
     );

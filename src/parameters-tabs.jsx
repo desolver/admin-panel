@@ -6,7 +6,8 @@ export default class ParameterTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeParameterIndex: 0
+      activeParameterIndex: 0,
+      dialogOpen: false
     };
   }
 
@@ -21,8 +22,13 @@ export default class ParameterTabs extends React.Component {
         tabsTitle={'Параметры'}
         getTabLabel={(parameter) => parameter.name}
         mt={this.props.mt || -3}
+        onTabsIconClick={() => { this.setState({ dialogOpen: true }); }}
         dialog={
-          <AddParameterDialog onAddParameter={this.props.onAddParameter} />
+          <AddParameterDialog
+            open={this.state.dialogOpen}
+            onClose={() => { this.setState({ dialogOpen: false }); }}
+            onAddParameter={this.props.onAddParameter}
+          />
         }
         innerTabs={(parameter) => {
           return (
