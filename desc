@@ -1,0 +1,13 @@
+Filter:
+    Name - Primary Value
+    Description - Primary Value
+    Categories - Primary Value
+    Price - Primary Value и AddValue (если CompareMode - Range)
+    Characteristics - Primary Value и AddValue (если CompareMode - Range)
+
+ValueRepr
+    Type - Всегда
+    Source - Всегда
+        InCart - PropertyName и Value (Назвать "Идентификатор продукта в корзине")
+        Constant - Value
+        DynamicParameter - DynamicParameterId

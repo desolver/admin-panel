@@ -23,9 +23,9 @@ export default class ParameterTabs extends React.Component {
   render() {
     return (
       <CustomTabs
-        tabItems={this.props.parameters}
+        tabItems={this.props.Parameters}
         tabsTitle={'Параметры'}
-        getTabLabel={(parameter) => parameter.name}
+        getTabLabel={(parameter) => parameter.Name}
         mt={this.props.mt || -3}
         onTabsIconClick={() => { this.setState({ dialogOpen: true }); }}
         dialog={
@@ -38,14 +38,14 @@ export default class ParameterTabs extends React.Component {
         innerTabs={(parameter) => {
           return (
             <div>
-              <b>ID:</b> {parameter.id}<br />
-              <b>Описание:</b> {parameter.description}<br />
-              <b>Тип вывода:</b> {parameter.type}<br />
-              <b>Значение по умолчанию:</b> {parameter.defaultValue}<br />
+              <b>ID:</b> {parameter.Id}<br />
+              <b>Описание:</b> {parameter.Description}<br />
+              <b>Тип вывода:</b> {parameter.Type}<br />
+              <b>Значение по умолчанию:</b> {parameter.DefaultValue}<br />
               <ParameterValidatorTabs
-                validators={parameter.validators}
+                Validators={parameter.Validators}
                 onSaveValidator={this.onSaveValidator}
-                parameter={parameter}
+                Parameter={parameter}
               />
             </div>
           )

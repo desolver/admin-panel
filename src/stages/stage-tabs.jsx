@@ -39,9 +39,9 @@ export default class StageTabs extends React.Component {
   render() {
     return (
       <CustomTabs
-        tabItems={this.props.stages}
+        tabItems={this.props.Stages}
         tabsTitle={'Стадии'}
-        getTabLabel={(stage) => stage.name}
+        getTabLabel={(stage) => stage.Name}
         onTabsIconClick={() => { this.setState({ dialogOpen: true }); }}
         dialog={
           <AddPropertyDialog
@@ -54,7 +54,7 @@ export default class StageTabs extends React.Component {
         }
         innerTabs={(stage) => (
           <StepTabs
-            steps={stage.steps}
+            Steps={stage.Steps}
             onAddStep={this.onAddStep}
             onAddParameter={this.onAddParameter}
             onSaveVisualization={this.onSaveVisualization}

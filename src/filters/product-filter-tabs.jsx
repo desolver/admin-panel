@@ -18,9 +18,9 @@ export default class ProductFilterTabs extends React.Component {
   render() {
     return (
       <CustomTabs
-        tabItems={this.props.filters}
+        tabItems={this.props.Filters}
         tabsTitle={'Фильтры товаров'}
-        getTabLabel={(filter) => filter.propertyName}
+        getTabLabel={(filter) => filter.PropertyName || "Фильтр"}
         mt={5}
         onTabsIconClick={() => { this.setState({ dialogOpen: true }); }}
         dialog={
@@ -32,29 +32,29 @@ export default class ProductFilterTabs extends React.Component {
             dialogTitle={"Новый фильтр"}
           />
         }
-        innerTabs={(filter) => (
+        innerTabs={(filter) => {(
           <div>
-                <b>ID фильтра:</b> {filter.id} <br />
-                <b>Название свойства:</b> {filter.propertyName} <br />
-                <b>Тип сравнения:</b> {filter.mode} <br />
-                <b>Тип значения:</b> {filter.valueType} <br />
+                <b>ID фильтра:</b> {filter.Id} <br />
+                <b>Название свойства:</b> {filter.PropertyName} <br />
+                <b>Тип сравнения:</b> {filter.Mode} <br />
+                <b>Тип значения:</b> {filter.ValueType} <br />
                 
-                <b>Основное значение</b> <br />
+                {/* <b>Основное значение</b> <br />
                 <em>
-                  — Использовать динамический параметр: {filter.primaryValue.useDynamicParameter ? 'Да' : 'Нет'} <br />
-                  — ID динамического параметра: {filter.primaryValue.dynamicParameterId || 'Не используется'} <br />
-                  — Тип: {filter.primaryValue.type || 'Не используется'} <br />
-                  — Константа: {filter.primaryValue.constantValue || 'Не используется'} <br />
+                  — Использовать динамический параметр: {filter.PrimaryValue.UseDynamicParameter ? 'Да' : 'Нет'} <br />
+                  — ID динамического параметра: {filter.PrimaryValue.DynamicParameterId || 'Не используется'} <br />
+                  — Тип: {filter.PrimaryValue.Type || 'Не используется'} <br />
+                  — Константа: {filter.PrimaryValue.ConstantValue || 'Не используется'} <br />
                 </em>
                 <b>Дополнительное значение</b> <br />
                 <em>
-                  — Использовать динамический параметр: {filter.additionalValue.useDynamicParameter ? 'Да' : 'Нет'} <br />
-                  — ID динамического параметра: {filter.additionalValue.dynamicParameterId || 'Не используется'} <br />
-                  — Тип: {filter.additionalValue.type || 'Не используется'} <br />
-                  — Константа: {filter.additionalValue.constantValue || 'Не используется'} <br />
-                </em>
+                  — Использовать динамический параметр: {filter.AdditionalValue.UseDynamicParameter ? 'Да' : 'Нет'} <br />
+                  — ID динамического параметра: {filter.AdditionalValue.DynamicParameterId || 'Не используется'} <br />
+                  — Тип: {filter.AdditionalValue.Type || 'Не используется'} <br />
+                  — Константа: {filter.AdditionalValue.ConstantValue || 'Не используется'} <br />
+                </em> */}
             </div>
-        )}
+        )}}
         onChangeTab={this.onChangeTab}
       />
     );

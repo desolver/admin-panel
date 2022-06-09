@@ -8,21 +8,22 @@ import { Button, InputLabel, MenuItem, Select } from '@mui/material';
 export default class ChangeVisualizationDialog extends React.Component {
   constructor(props) {
     super(props);
-    const selectedCameraPositionId = this.props.visualization
-      ? this.props.visualization.cameraPositionId
+    const selectedCameraPositionId = this.props.Visualization
+      ? this.props.Visualization.CameraPositionId
       : '1';
 
     this.state = {
-      cameraPositionId: selectedCameraPositionId
+      CameraPositionId: selectedCameraPositionId
     }
   }
 
   changeSelectTypeValue = (event) => {
-    this.setState({cameraPositionId: event.target.value});
+    this.setState({CameraPositionId: event.target.value});
   }
 
   onSave = () => {
-    const cameraPositionId = this.state.cameraPositionId;
+    debugger;
+    const cameraPositionId = this.state.CameraPositionId;
     this.props.onSave(cameraPositionId);
   }
 
@@ -35,7 +36,7 @@ export default class ChangeVisualizationDialog extends React.Component {
           <Select
             labelId="camera-position-select-label"
             id="camera-position-select"
-            value={this.state.cameraPositionId}
+            value={this.state.CameraPositionId}
             onChange={this.changeSelectTypeValue}
           >
             <MenuItem value={'1'}>1</MenuItem>

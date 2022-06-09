@@ -41,9 +41,9 @@ export default class StepTabs extends React.Component {
   render() {
     return (
       <CustomTabs
-        tabItems={this.props.steps}
+        tabItems={this.props.Steps}
         tabsTitle={'Шаги'}
-        getTabLabel={(step) => step.name}
+        getTabLabel={(step) => step.Name}
         mt={-3}
         onTabsIconClick={() => { this.setState({ dialogOpen: true }); }}
         dialog={
@@ -58,16 +58,16 @@ export default class StepTabs extends React.Component {
         innerTabs={(step) => (
           <div>
             <ParameterTabs
-              parameters={step.parameters}
+              Parameters={step.Parameters}
               onAddParameter={this.onSaveParameter}
               onSaveValidator={this.onSaveValidator}
             />
             <ProductFilterTabs
-              filters={step.filters}
+              Filters={step.Filters}
               onSaveFilter={this.onSaveFilter}
             />
             <VisualizationTabs
-              visualization={step.visualizationSetup}
+              Visualization={step.Visualization}
               onSave={this.onSaveVisualization}
               width={250}
             />

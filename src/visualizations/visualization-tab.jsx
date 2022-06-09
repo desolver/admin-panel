@@ -25,10 +25,10 @@ export default class VisualizationTabs extends React.Component {
     }
 
     render() {
-      const visualizationExists = this.props.visualization;
+      const visualizationExists = this.props.Visualization;
 
       const comment = visualizationExists
-        ? <Div>Позиция камеры: {this.props.visualization.cameraPositionId}</Div>
+        ? <Div>Позиция камеры: {this.props.Visualization.CameraPositionId}</Div>
         : <Div>Добавьте визуализацию,<br />если это необходимо</Div>;
 
       const padding = visualizationExists ? 0.6 : 0.1;
@@ -72,7 +72,7 @@ export default class VisualizationTabs extends React.Component {
             onClose={() => { this.setState({ dialogOpen: false }); }}
             dialogTitle={visualizationExists ? "Редактирование визуализации" : "Новая настройка визуализации"}
             onSave={this.onSave}
-            visualization={this.props.visualization}
+            Visualization={this.props.Visualization}
           />
       </Grid>
       );
