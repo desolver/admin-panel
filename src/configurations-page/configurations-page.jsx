@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import { Add } from "@mui/icons-material";
-import { Card, CardActionArea, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
+import { Add, ArrowBack } from "@mui/icons-material";
+import { AppBar, Button, Card, CardActionArea, CardContent, CardMedia, IconButton, Toolbar, Typography } from "@mui/material";
 import * as React from "react";
 
 const Container = styled('div')(({ theme }) => ({
-    maxWidth: "80%",
+    maxWidth: "90%",
     margin: "5%",
     marginTop: "2%"
   }));
@@ -18,7 +18,10 @@ const ConfigContainer = styled('div')(({ theme }) => ({
 }));
 
 const Header = styled('div')(({ theme }) => ({
-    marginBottom: "50px"
+    marginBottom: "50px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "baseline"
 }));
 
 export default class ConfigurationsPage extends React.Component {
@@ -60,11 +63,27 @@ export default class ConfigurationsPage extends React.Component {
         } else {
             return (
                 <Container>
-                    <Header>
-                        <Typography gutterBottom variant="h2" component="div">
-                            Выбор конфигурации для редактирования
-                        </Typography>
-                    </Header>
+                    <AppBar position="static" sx={{ mb: 5, boxShadow: "3", width: "100%" }}>
+                        <Toolbar>
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{ mr: 2 }}
+                                onClick={() => {
+                                    window.location = `/`;
+                                }}
+                            >
+                                <ArrowBack sx={{ fontSize: 24 }} />
+                            </IconButton>
+                            <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                                Выбор конфигурации для редактирования
+                            </Typography>
+
+                        </Toolbar>
+                    </AppBar>
+
                     <ConfigContainer>
                         {items.map((item, index) => (
                             <Card

@@ -1,5 +1,5 @@
 import { ArrowBack } from "@mui/icons-material";
-import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Grid, IconButton, Toolbar, Typography } from "@mui/material";
 import * as React from "react";
 import StageTabs from "../stages/stage-tabs";
 
@@ -114,31 +114,38 @@ export default class EditConfigurationPage extends React.Component {
         } else if (!isLoaded) {
           return <div>Загрузка...</div>;
         } else {
-            return (
-                <div>
-                    <AppBar position="static" sx={{ mb: 5, boxShadow: "3" }}>
-                        <Toolbar>
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                                sx={{ mr: 2 }}
-                                onClick={() => {
-                                    window.location = `/admin/configurations`;
-                                }}
-                            >
-                                <ArrowBack sx={{ fontSize: 24 }} />
-                            </IconButton>
-                            <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-                                {
-                                    this.state.Scenario?.Name || "Новая конфигурация"
-                                }
-                            </Typography>
-                        </Toolbar>
-                    </AppBar>
-                    <Grid>
-                        <StageTabs
+          return (
+            <div>
+              <AppBar position="static" sx={{ mb: 5, boxShadow: "3" }}>
+                <Toolbar>
+                  <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{ mr: 2 }}
+                    onClick={() => {
+                      window.location = `/admin/configurations`;
+                    }}
+                  >
+                    <ArrowBack sx={{ fontSize: 24 }} />
+                  </IconButton>
+                  <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                    {
+                      this.state.Scenario?.Name || "Новая конфигурация"
+                    }
+                  </Typography>
+                  <Button variant="contained"
+                    sx={{ mr: 2, fontSize: 16, background: "#ffffff", color: "#000000" }}
+                    onClick={() => {
+                      window.location = `/admin/configurations`;
+                    }}>
+                    Сохранить
+                  </Button>
+                </Toolbar>
+              </AppBar>
+              <Grid>
+                <StageTabs
                             Stages={Stages}
                             onAddStage={this.onAddStage}
                             onAddStep={this.onAddStep}
@@ -148,22 +155,6 @@ export default class EditConfigurationPage extends React.Component {
                             onSaveFilter={this.onSaveFilter}
                         />
                     </Grid>
-                <AppBar position="static"
-                 sx={{ mt: 5, width: "99%", boxShadow: "3", position: "absolute", bottom: 0, background: "#dfe5f5" }}>
-                  <Toolbar>
-                    <IconButton
-                      size="large"
-                      edge="start"
-                      aria-label="menu"
-                      sx={{ mr: 2, fontSize: 22 }}
-                      onClick={() => {
-                        window.location = `/admin/configurations`;
-                      }}
-                    >
-                    Сохранить
-                    </IconButton>
-                  </Toolbar>
-                </AppBar>
               </div>
             );
         }
