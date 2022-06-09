@@ -1,6 +1,7 @@
 import { ArrowBack } from "@mui/icons-material";
 import { AppBar, Button, Grid, IconButton, Toolbar, Typography } from "@mui/material";
 import * as React from "react";
+import { createGuid } from "../guid-creator";
 import StageTabs from "../stages/stage-tabs";
 
 export default class EditConfigurationPage extends React.Component {
@@ -107,56 +108,77 @@ export default class EditConfigurationPage extends React.Component {
         this.updateStageState();
       };
 
-    render() {
-        const { error, isLoaded, Stages } = this.state;
-        if (error) {
-          return <div>Ошибка: {error.message}</div>;
-        } else if (!isLoaded) {
-          return <div>Загрузка...</div>;
-        } else {
-          return (
-            <div>
-              <AppBar position="static" sx={{ mb: 5, boxShadow: "3", background: "#d8d8d8", color: "#3f4155" }}>
-                <Toolbar>
-                  <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{ mr: 2 }}
-                    onClick={() => {
-                      window.location = `/admin/configurations`;
-                    }}
-                  >
-                    <ArrowBack sx={{ fontSize: 24 }} />
-                  </IconButton>
-                  <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-                    {
-                      this.state.Scenario?.Name || "Новая конфигурация"
-                    }
-                  </Typography>
-                  <Button variant="contained"
-                    sx={{ mr: 2, fontSize: 16, background: "#ffffff", color: "#000000" }}
-                    onClick={() => {
-                      window.location = `/admin/configurations`;
-                    }}>
-                    Сохранить
-                  </Button>
-                </Toolbar>
-              </AppBar>
-              <Grid>
-                <StageTabs
-                            Stages={Stages}
-                            onAddStage={this.onAddStage}
-                            onAddStep={this.onAddStep}
-                            onAddParameter={this.onAddParameter}
-                            onSaveVisualization={this.onSaveVisualization}
-                            onSaveValidator={this.onSaveValidator}
-                            onSaveFilter={this.onSaveFilter}
-                        />
-                    </Grid>
-              </div>
-            );
-        }
-      }
+  onSaveScenario = () => {
+    const scenario = this.state.scenario || {};
+    scenario.Id = scenario.Id || createGuid;
+    scenario.Name = scenario.Name || "Созданный сценарий конфигурации";
+    scenario.Scene = scenario.Scene || {};
+    scenario.Scene.Name = scenario.Scene.Name || "Созданный сценарий конфигурации";
+    scenario.Scene.Stages = this.state.Stages;
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(scenario)
+    };
+
+    fetch('https://api.test.projects-cabinet.ru/catalog/scenarios/create', requestOptions)
+      .then(response => {
+        debugger;
+        console.log(response.json())
+      });
+
+    window.location = `/admin/configurations`;
+  };
+
+  render() {
+    const { error, isLoaded, Stages } = this.state;
+    if (error) {
+      return <div>Ошибка: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Загрузка...</div>;
+    } else {
+      return (
+        <div>
+          <AppBar position="static" sx={{ mb: 5, boxShadow: "3", background: "#d8d8d8", color: "#3f4155" }}>
+            <Toolbar>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                onClick={() => {
+                  window.location = `/admin/configurations`;
+                }}
+              >
+                <ArrowBack sx={{ fontSize: 24 }} />
+              </IconButton>
+              <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                {
+                  this.state.Scenario?.Name || "Новая конфигурация"
+                }
+              </Typography>
+              <Button variant="contained"
+                sx={{ mr: 2, fontSize: 16, background: "#ffffff", color: "#000000" }}
+                onClick={() => this.onSaveScenario()}>
+                Сохранить
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <Grid>
+            <StageTabs
+              Stages={Stages}
+              onAddStage={this.onAddStage}
+              onAddStep={this.onAddStep}
+              onAddParameter={this.onAddParameter}
+              onSaveVisualization={this.onSaveVisualization}
+              onSaveValidator={this.onSaveValidator}
+              onSaveFilter={this.onSaveFilter}
+            />
+          </Grid>
+        </div>
+      );
+    }
+  }
 }
