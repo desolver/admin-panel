@@ -116,7 +116,7 @@ export default class EditConfigurationPage extends React.Component {
         } else {
           return (
             <div>
-              <AppBar position="static" sx={{ mb: 5, boxShadow: "3" }}>
+              <AppBar position="static" sx={{ mb: 5, boxShadow: "3", background: "#d8d8d8", color: "#3f4155" }}>
                 <Toolbar>
                   <IconButton
                     size="large"

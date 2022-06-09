@@ -63,7 +63,7 @@ export default class ConfigurationsPage extends React.Component {
         } else {
             return (
                 <Container>
-                    <AppBar position="static" sx={{ mb: 5, boxShadow: "3", width: "100%" }}>
+                    <AppBar position="static" sx={{ mb: 5, boxShadow: "3", width: "100%", background: "#d8d8d8", color: "#3f4155" }}>
                         <Toolbar>
                             <IconButton
                                 size="large"
